@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1570991535633" clover="3.2.0">
+  <project timestamp="1570991535633" name="All files">
+    <metrics statements="17" coveredstatements="17" conditionals="8" coveredconditionals="8" methods="3" coveredmethods="3" elements="28" coveredelements="28" complexity="0" loc="17" ncloc="17" packages="1" files="2" classes="2"/>
+    <file name="index.js" path="/home/alexander/Hexlet Projects/Diff/src/index.js">
+      <metrics statements="10" coveredstatements="10" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="6" count="3" type="stmt"/>
+      <line num="7" count="3" type="stmt"/>
+      <line num="8" count="3" type="stmt"/>
+      <line num="9" count="3" type="stmt"/>
+      <line num="10" count="15" type="cond" truecount="4" falsecount="0"/>
+      <line num="11" count="6" type="cond" truecount="2" falsecount="0"/>
+      <line num="14" count="9" type="cond" truecount="2" falsecount="0"/>
+      <line num="15" count="6" type="stmt"/>
+      <line num="17" count="3" type="stmt"/>
+    </file>
+    <file name="parsers.js" path="/home/alexander/Hexlet Projects/Diff/src/parsers.js">
+      <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="4" count="1" type="stmt"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="14" count="6" type="stmt"/>
+      <line num="15" count="6" type="stmt"/>
+      <line num="16" count="6" type="stmt"/>
+    </file>
+  </project>
+</coverage>

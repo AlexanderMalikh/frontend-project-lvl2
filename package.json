@@ -2,7 +2,7 @@
   "name": "diff",
   "version": "1.0.0",
   "description": "hexlet backend project lvl2",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
     "prepublishOnly": "npm run build"
@@ -36,5 +36,8 @@
     "@babel/preset-env": "^7.6.3",
     "babel-jest": "^24.9.0",
     "commander": "^3.0.2"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
   }
 }

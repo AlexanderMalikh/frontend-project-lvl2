@@ -4,5 +4,5 @@ language: node_js
 node_js:
   - node
 script:
-  - make lint
-  - make jest
+  - npx eslint .
+  - npx jest . --watch

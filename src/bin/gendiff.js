@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-import diffJson from '../parsers/plain json.js';
+import diffJson from '../parsers/plain json';
+
 const program = require('commander');
 
 program
@@ -7,9 +8,5 @@ program
   .arguments('<firstConfig> <secondConfig>')
   .description('Compares two configuration files and shows a difference')
   .option('-f, --format [type]', 'output format')
-  .action(function (firstConfig, secondConfig) {
-    diffJson(firstConfig, secondConfig)
-  });
-
+  .action((firstConfig, secondConfig) => console.log(diffJson(firstConfig, secondConfig)));
 program.parse(process.argv);
-

@@ -1,5 +1,4 @@
 import genDiff from '..';
-import _ from 'lodash';
 
 const fs = require('fs');
 

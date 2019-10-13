@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import diffJson from '../parsers/plain json';
+import diffJson from '..';
 
 const program = require('commander');
 

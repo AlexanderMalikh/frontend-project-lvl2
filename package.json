@@ -43,7 +43,8 @@
     "jest": "^24.9.0"
   },
   "dependencies": {
-    "lodash": "^4.17.15",
-    "commander": "^3.0.2"
+    "commander": "^3.0.2",
+    "js-yaml": "^3.13.1",
+    "lodash": "^4.17.15"
   }
 }

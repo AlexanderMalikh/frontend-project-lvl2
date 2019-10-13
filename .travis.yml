@@ -5,4 +5,4 @@ node_js:
   - node
 script:
   - npx eslint .
-  - npx jest . --watch
+  - npx jest .

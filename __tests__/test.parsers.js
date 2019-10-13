@@ -1,4 +1,4 @@
-import genDiff from '..';
+import genDiff from '../src';
 
 const fs = require('fs');
 

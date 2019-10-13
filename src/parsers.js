@@ -1,6 +1,7 @@
 import yaml from 'js-yaml';
 
 const fs = require('fs');
+const path = require('path');
 
 const mapping = {
   yml: yaml.safeLoad,
@@ -9,6 +10,6 @@ const mapping = {
 
 export default (filePath) => {
   const file = fs.readFileSync(filePath, 'utf-8');
-  const format = filePath.split('.')[1];
+  const format = path.extname(filePath).slice(1);
   return mapping[format](file);
 };

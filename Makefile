@@ -10,7 +10,6 @@ lint:
 	npx eslint .
 
 test:
-	npx jest . --watch
-
+	npx jest . 
 .PHONY: test
 

@@ -16,11 +16,12 @@ const nestedIniBefore = `${__dirname}/__fixtures__/nestedBefore.json`;
 const nestedIniAfter = `${__dirname}/__fixtures__/nestedAfter.json`;
 const plainResult = fs.readFileSync(`${__dirname}/__fixtures__/plainResult`, 'utf-8');
 const nestedResult = fs.readFileSync(`${__dirname}/__fixtures__/nestedResult`, 'utf-8');
+const plainFormatterResult = fs.readFileSync(`${__dirname}/__fixtures__/plainFormatterResult`, 'utf-8');
 
-test('two plain JSON\'s', () => {
+/* test('two plain JSON\'s', () => {
   expect(genDiff(plainJsonBefore, plainJsonAfter)).toBe(plainResult.trimRight());
 });
-test('two plain YAML\'s', () => {
+/test('two plain YAML\'s', () => {
   expect(genDiff(plainYamlBefore, plainYamlAfter)).toBe(plainResult.trimRight());
 });
 test('two plain INI\'s', () => {
@@ -34,4 +35,8 @@ test('two nested YML\'s', () => {
 });
 test('two nested INI\'s', () => {
   expect(genDiff(nestedIniBefore, nestedIniAfter)).toBe(nestedResult.trimRight());
+});
+*/
+test('plain formatter', () => {
+  expect(genDiff(nestedJsonBefore, nestedJsonAfter)).toBe(plainFormatterResult.trimRight());
 });

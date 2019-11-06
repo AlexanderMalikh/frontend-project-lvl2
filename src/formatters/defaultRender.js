@@ -13,7 +13,7 @@ const stringify = (node, deep) => {
   return node;
 };
 
-const defaultFormatter = (ast) => {
+const defaultRender = (ast) => {
   const getStrings = (nodes, deep = 1) => Object.keys(nodes).map((key) => {
     const { value, children, status } = nodes[key];
 
@@ -34,4 +34,4 @@ const defaultFormatter = (ast) => {
   return `{\n${renderedAst}\n}`;
 };
 
-export default defaultFormatter;
+export default defaultRender;

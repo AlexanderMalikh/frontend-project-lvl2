@@ -7,7 +7,7 @@ const stringify = (node) => {
   return `'${node}'`;
 };
 
-const plainRenderer = (ast) => {
+const plainRender = (ast) => {
   const getStrings = (nodes, parent = '') => Object.keys(nodes).filter((key) => nodes[key].status !== 'unchanged').map((key) => {
     const { value, children, status } = nodes[key];
     if (children !== undefined) {
@@ -25,4 +25,4 @@ const plainRenderer = (ast) => {
   return `${renderedAst}`;
 };
 
-export default plainRenderer;
+export default plainRender;

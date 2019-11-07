@@ -1,4 +1,4 @@
-import genDiff from '../src';
+import makeDiff from '../src';
 
 const fs = require('fs');
 
@@ -20,26 +20,26 @@ const plainFormatterResult = fs.readFileSync(`${__dirname}/__fixtures__/plainFor
 const jsonResult = fs.readFileSync(`${__dirname}/__fixtures__/jsonResult.json`, 'utf-8');
 
 test('two plain JSON\'s', () => {
-  expect(genDiff(plainJsonBefore, plainJsonAfter)).toBe(plainResult.trimRight());
+  expect(makeDiff(plainJsonBefore, plainJsonAfter)).toBe(plainResult.trimRight());
 });
 test('two plain YAML\'s', () => {
-  expect(genDiff(plainYamlBefore, plainYamlAfter)).toBe(plainResult.trimRight());
+  expect(makeDiff(plainYamlBefore, plainYamlAfter)).toBe(plainResult.trimRight());
 });
 test('two plain INI\'s', () => {
-  expect(genDiff(plainIniBefore, plainIniAfter)).toBe(plainResult.trimRight());
+  expect(makeDiff(plainIniBefore, plainIniAfter)).toBe(plainResult.trimRight());
 });
 test('two nested JSON\'s', () => {
-  expect(genDiff(nestedJsonBefore, nestedJsonAfter)).toBe(nestedResult.trimRight());
+  expect(makeDiff(nestedJsonBefore, nestedJsonAfter)).toBe(nestedResult.trimRight());
 });
 test('two nested YML\'s', () => {
-  expect(genDiff(nestedYmlBefore, nestedYmlAfter)).toBe(nestedResult.trimRight());
+  expect(makeDiff(nestedYmlBefore, nestedYmlAfter)).toBe(nestedResult.trimRight());
 });
 test('two nested INI\'s', () => {
-  expect(genDiff(nestedIniBefore, nestedIniAfter)).toBe(nestedResult.trimRight());
+  expect(makeDiff(nestedIniBefore, nestedIniAfter)).toBe(nestedResult.trimRight());
 });
 test('plain formatter', () => {
-  expect(genDiff(nestedJsonBefore, nestedJsonAfter, 'plain')).toBe(plainFormatterResult.trimRight());
+  expect(makeDiff(nestedJsonBefore, nestedJsonAfter, 'plain')).toBe(plainFormatterResult.trimRight());
 });
 test('json formatter', () => {
-  expect(genDiff(nestedJsonBefore, nestedJsonAfter, 'json')).toBe(jsonResult.trimRight());
+  expect(makeDiff(nestedJsonBefore, nestedJsonAfter, 'json')).toBe(jsonResult.trimRight());
 });

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import diffJson from '..';
+import makeDiff from '..';
 
 const program = require('commander');
 
@@ -9,6 +9,6 @@ program
   .description('Compares two configuration files and shows a difference')
   .option('-f, --format [type]', 'output format')
   .action((firstConfig, secondConfig) => {
-    console.log(diffJson(firstConfig, secondConfig, program.format));
+    console.log(makeDiff(firstConfig, secondConfig, program.format));
   });
 program.parse(process.argv);

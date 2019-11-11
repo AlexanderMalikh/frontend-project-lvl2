@@ -5,10 +5,9 @@ import buildAst from './astBuilder';
 import parse from './parser';
 
 export default (filePath1, filePath2, format) => {
-  const file1 = parse(filePath1);
-  const file2 = parse(filePath2);
-  const ast = buildAst(file1, file2);
-  // console.log(ast);
+  const parsedFile1 = parse(filePath1);
+  const parsedFile2 = parse(filePath2);
+  const ast = buildAst(parsedFile1, parsedFile2);
   if (format === 'plain') return plainRender(ast);
   if (format === 'json') return jsonRender(ast);
   return defaultRender(ast);

@@ -4,15 +4,15 @@ import makeDiff from '../src';
 const getFixturePath = (filename) => `${__dirname}/__fixtures__/${filename}`;
 
 const data = [
-  ['nestedBefore.json', 'nestedAfter.json', 'result', 'default'],
-  ['nestedBefore.yml', 'nestedAfter.yml', 'result', 'default'],
-  ['nestedBefore.ini', 'nestedAfter.ini', 'result', 'default'],
-  ['nestedBefore.json', 'nestedAfter.json', 'plainResult', 'plain'],
-  ['nestedBefore.ini', 'nestedAfter.ini', 'jsonResult.json', 'json'],
+  ['nestedBefore.json', 'nestedAfter.json', 'default', 'result'],
+  ['nestedBefore.yml', 'nestedAfter.yml', 'default', 'result'],
+  ['nestedBefore.ini', 'nestedAfter.ini', 'default', 'result'],
+  ['nestedBefore.json', 'nestedAfter.json', 'plain', 'plainResult'],
+  ['nestedBefore.ini', 'nestedAfter.ini', 'json', 'jsonResult.json'],
 ];
 
-describe('asdashdkjas', () => {
-  test.each(data)('compare %s and %s ', (file1, file2, expectation, format = 'default') => {
+describe('format tests', () => {
+  test.each(data)('compare %s and %s with %s format', (file1, file2, format = 'default', expectation) => {
     const file1path = getFixturePath(file1);
     const file2path = getFixturePath(file2);
     const expectedResult = fs.readFileSync(getFixturePath(expectation), 'utf-8').trimRight();

@@ -9,8 +9,13 @@ const mappingByFormat = {
   ini: ini.parse,
 };
 
-export default (filePath) => {
+const getFileContent = (filePath) => {
   const file = fs.readFileSync(filePath, 'utf-8');
   const format = path.extname(filePath).slice(1);
-  return mappingByFormat[format](file);
+  return { file, format };
+};
+
+export default (filePath) => {
+  const content = getFileContent(filePath);
+  return mappingByFormat[content.format](content.file);
 };

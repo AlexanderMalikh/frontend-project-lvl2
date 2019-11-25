@@ -1,14 +1,10 @@
-import plainRender from './formatters/plainRender';
-import jsonRender from './formatters/jsonRender';
-import defaultRender from './formatters/defaultRender';
 import buildAst from './astBuilder';
 import parse from './parser';
+import getFormattedOutput from './formatters';
 
-export default (filePath1, filePath2, format) => {
-  const parsedFile1 = parse(filePath1);
-  const parsedFile2 = parse(filePath2);
-  const ast = buildAst(parsedFile1, parsedFile2);
-  if (format === 'plain') return plainRender(ast);
-  if (format === 'json') return jsonRender(ast);
-  return defaultRender(ast);
+export default (fileBefore, fileAfter, format) => {
+  const parsedFileBefore = parse(fileBefore);
+  const parsedFileAfter = parse(fileAfter);
+  const ast = buildAst(parsedFileBefore, parsedFileAfter);
+  getFormattedOutput(ast, format);
 };

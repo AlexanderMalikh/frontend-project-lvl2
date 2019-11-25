@@ -6,5 +6,5 @@ export default (fileBefore, fileAfter, format) => {
   const parsedFileBefore = parse(fileBefore);
   const parsedFileAfter = parse(fileAfter);
   const ast = buildAst(parsedFileBefore, parsedFileAfter);
-  getFormattedOutput(ast, format);
+  return getFormattedOutput(ast, format);
 };

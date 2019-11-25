@@ -16,6 +16,6 @@ const getFileContent = (filePath) => {
 };
 
 export default (filePath) => {
-  const content = getFileContent(filePath);
-  return mappingByFormat[content.format](content.file);
+  const { file, format } = getFileContent(filePath);
+  return mappingByFormat[format](file);
 };

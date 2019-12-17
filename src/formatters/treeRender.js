@@ -15,17 +15,19 @@ const stringify = (node, deep) => {
 
 const defaultRender = (ast) => {
   const getStrings = (nodes, deep = 1) => Object.keys(nodes).map((key) => {
-    const { value, children, status } = nodes[key];
+    const {
+      beforeValue, afterValue, children, status,
+    } = nodes[key];
 
     if (children !== undefined) {
       return `${makeIndent(deep + 1)}${key}: {\n${_.flatten(getStrings(children, deep + 2)).join('\n')}\n${makeIndent(deep + 1)}}`;
     }
 
     const mappingByStatus = {
-      unchanged: `  ${key}: ${stringify(value, deep)}`,
-      changed: `+ ${key}: ${stringify(value.newValue, deep)}\n${makeIndent(deep)}- ${key}: ${stringify(value.oldValue, deep)}`,
-      added: `+ ${key}: ${stringify(value, deep)}`,
-      removed: `- ${key}: ${stringify(value, deep)}`,
+      unchanged: `  ${key}: ${stringify(beforeValue, deep)}`,
+      changed: `+ ${key}: ${stringify(afterValue, deep)}\n${makeIndent(deep)}- ${key}: ${stringify(beforeValue, deep)}`,
+      added: `+ ${key}: ${stringify(afterValue, deep)}`,
+      removed: `- ${key}: ${stringify(beforeValue, deep)}`,
     };
     return `${makeIndent(deep)}${mappingByStatus[status]}`;
   });

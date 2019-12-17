@@ -1,27 +1,50 @@
 import _ from 'lodash';
 
+const statuses = [
+  {
+    status: 'tree',
+    check: (obj1, obj2, key) => (_.has(key, obj1) && _.has(key, obj2)
+    && _.isObject(obj1[key]) && _.isObject(obj2[key])),
+    action: (obj1, obj2, key, func) => ({ children: func(obj1[key], obj2[key]) }),
+  },
+  {
+    status: 'unchanged',
+    check: (obj1, obj2, key) => _.has(obj1, key) && _.has(obj2, key) && obj1[key] !== obj2[key],
+    action: (obj1, obj2, key) => ({ beforeValue: obj1[key] }),
+  },
+  {
+    status: 'changed',
+    check: (obj1, obj2, key) => _.has(obj1, key) && _.has(obj2, key) && obj1[key] !== obj2[key],
+    action: (obj1, obj2, key) => ({ beforeValue: obj1[key], afterValue: obj2[key] }),
+  },
+  {
+    status: 'added',
+    check: (obj1, obj2, key) => !_.has(obj1, key) && _.has(obj2, key),
+    action: (obj1, obj2, key) => ({ afterValue: obj2[key] }),
+  },
+  {
+    status: 'removed',
+    check: (obj1, obj2, key) => _.has(obj1, key) && !_.has(obj2, key),
+    action: (obj1, obj2, key) => ({ beforeValue: obj1[key] }),
+  },
+];
 const buildAst = (file1obj, file2obj) => {
   // collect unique keys
-  const keys = [...Object.keys(file1obj),
-    ...Object.keys(file2obj).filter((key) => !_.has(file1obj, key))];
+  // sdelat massiv s dispetch. po tipy nodi(changed, added removed etc) vmesto IFov s pomoshu .find
+  // proiti po klucham mapperom ispol'zyya dispatch i vernyt MASSIV s objectami
 
-  const ast = keys.reduce((acc, key) => {
-    const file1value = file1obj[key];
-    const file2value = file2obj[key];
-    if (_.has(file1obj, key) && _.has(file2obj, key)) {
-      if (file1value === file2value) {
-        return { ...acc, [key]: { value: file1value, status: 'unchanged' } };
-      }
-      if (typeof file1value === 'object' && typeof file2value === 'object') {
-        return { ...acc, [key]: { children: buildAst(file1value, file2value), status: 'changed' } };
-      }
-      return { ...acc, [key]: { value: { oldValue: file1value, newValue: file2value }, status: 'changed' } };
-    }
-    if (!_.has(file1obj, key) && _.has(file2obj, key)) {
-      return { ...acc, [key]: { value: file2value, status: 'added' } };
-    }
-    return { ...acc, [key]: { value: file1value, status: 'removed' } };
-  }, {});
+  const keys = _.union(_.keys(file1obj), _.keys(file2obj));
+  const ast = keys.map((key) => {
+    const { status, action } = statuses.find(({ check }) => check(file1obj, file2obj, key));
+    const { beforeValue, afterValue, children } = action(file1obj, file2obj, key, buildAst);
+    return {
+      status,
+      key,
+      beforeValue,
+      afterValue,
+      children,
+    };
+  });
   return ast;
 };
 export default buildAst;

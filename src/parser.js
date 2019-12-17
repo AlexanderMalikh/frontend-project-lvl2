@@ -19,3 +19,4 @@ export default (filePath) => {
   const { file, format } = getFileContent(filePath);
   return mappingByFormat[format](file);
 };
+// парсер не должен читать файл

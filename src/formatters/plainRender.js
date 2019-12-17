@@ -9,13 +9,15 @@ const stringify = (node) => {
 
 const plainRender = (ast) => {
   const getStrings = (nodes, parent = '') => Object.keys(nodes).filter((key) => nodes[key].status !== 'unchanged').map((key) => {
-    const { value, children, status } = nodes[key];
+    const {
+      beforeValue, afterValue, children, status,
+    } = nodes[key];
     if (children !== undefined) {
       return `${_.flatten(getStrings(children, `${parent}${key}.`)).join('\n')}`;
     }
     const mappingByStatus = {
-      changed: `Property \`${parent}${key}\` was updated from ${stringify(value.oldValue)} to ${stringify(value.newValue)}`,
-      added: `Property \`${parent}${key}\` was added with value: ${stringify(value)}`,
+      changed: `Property \`${parent}${key}\` was updated from ${stringify(beforeValue)} to ${stringify(afterValue)}`,
+      added: `Property \`${parent}${key}\` was added with value: ${stringify(afterValue)}`,
       removed: `Property \`${parent}${key}\` was removed`,
     };
     return `${mappingByStatus[status]}`;

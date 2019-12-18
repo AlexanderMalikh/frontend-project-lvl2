@@ -2,38 +2,28 @@ import _ from 'lodash';
 
 const makeIndent = (deep) => '  '.repeat(deep);
 
-const stringify = (node, deep) => {
-  if (typeof node === 'object') {
-    const content = Object.keys(node).map((key) => {
-      if (deep !== 1) return `${makeIndent(deep)}${key}: ${node[key]}\n`;
-      return `${makeIndent(deep * 3)}${key}: ${node[key]}\n`;
-    });
-    return `{\n${makeIndent(deep)}${content}${makeIndent(deep + 1)}}`;
+const stringify = (node, deep = 0) => {
+  if (_.isObject(node)) {
+    const content = _.keys(node).map((elem) => `{\n${makeIndent(deep + 2)}${elem}: ${node.key}\n${makeIndent(deep)}}`).join('\n');
+    return `${content}`;
   }
   return node;
 };
 
-const defaultRender = (ast) => {
-  const getStrings = (nodes, deep = 1) => Object.keys(nodes).map((key) => {
-    const {
-      beforeValue, afterValue, children, status,
-    } = nodes[key];
+const mapByStatus = {
+  tree: (item, deep, func) => `${makeIndent(deep)}${item.key}: ${(func(item.children, deep + 2))}`,
+  unchanged: (item, deep) => `${makeIndent(deep)}${item.key}: ${stringify(item.beforeValue, deep)}`,
+  changed: (item, deep) => [`${makeIndent(deep - 1)}+ ${item.key}: ${stringify(item.afterValue, deep)},
+    ${makeIndent(deep - 1)}- ${item.key}: ${stringify(item.beforeValue, deep)}`],
+  added: (item, deep) => `${makeIndent(deep - 1)}+ ${item.key}: ${stringify(item.afterValue, deep)}`,
+  removed: (item, deep) => `${makeIndent(deep - 1)}- ${item.key}: ${stringify(item.beforeValue, deep)}`,
+};
 
-    if (children !== undefined) {
-      return `${makeIndent(deep + 1)}${key}: {\n${_.flatten(getStrings(children, deep + 2)).join('\n')}\n${makeIndent(deep + 1)}}`;
-    }
-
-    const mappingByStatus = {
-      unchanged: `  ${key}: ${stringify(beforeValue, deep)}`,
-      changed: `+ ${key}: ${stringify(afterValue, deep)}\n${makeIndent(deep)}- ${key}: ${stringify(beforeValue, deep)}`,
-      added: `+ ${key}: ${stringify(afterValue, deep)}`,
-      removed: `- ${key}: ${stringify(beforeValue, deep)}`,
-    };
-    return `${makeIndent(deep)}${mappingByStatus[status]}`;
-  });
-  const renderedAst = (_.flatten(getStrings(ast))).join('\n');
-  // console.log(ast);
+const treeRender = (ast, deep = 2) => {
+  console.log(ast);
+  const getStrings = ast.map((node) => mapByStatus[node.status](node, deep, treeRender));
+  const renderedAst = _.flatten(getStrings).join('\n');
   return `{\n${renderedAst}\n}`;
 };
 
-export default defaultRender;
+export default treeRender;

@@ -3,13 +3,13 @@ import _ from 'lodash';
 const statuses = [
   {
     status: 'tree',
-    check: (obj1, obj2, key) => (_.has(key, obj1) && _.has(key, obj2)
-    && _.isObject(obj1[key]) && _.isObject(obj2[key])),
+    check: (obj1, obj2, key) => (_.has(obj1, key) && _.has(obj2, key)
+      && _.isObject(obj1[key]) && _.isObject(obj2[key])),
     action: (obj1, obj2, key, func) => ({ children: func(obj1[key], obj2[key]) }),
   },
   {
     status: 'unchanged',
-    check: (obj1, obj2, key) => _.has(obj1, key) && _.has(obj2, key) && obj1[key] !== obj2[key],
+    check: (obj1, obj2, key) => _.has(obj1, key) && _.has(obj2, key) && obj1[key] === obj2[key],
     action: (obj1, obj2, key) => ({ beforeValue: obj1[key] }),
   },
   {
@@ -29,10 +29,6 @@ const statuses = [
   },
 ];
 const buildAst = (file1obj, file2obj) => {
-  // collect unique keys
-  // sdelat massiv s dispetch. po tipy nodi(changed, added removed etc) vmesto IFov s pomoshu .find
-  // proiti po klucham mapperom ispol'zyya dispatch i vernyt MASSIV s objectami
-
   const keys = _.union(_.keys(file1obj), _.keys(file2obj));
   const ast = keys.map((key) => {
     const { status, action } = statuses.find(({ check }) => check(file1obj, file2obj, key));

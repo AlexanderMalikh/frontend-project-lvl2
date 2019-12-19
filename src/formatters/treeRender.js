@@ -1,5 +1,5 @@
 import _ from 'lodash';
-// отступ для } = накопленный отступ - внешний отступ
+
 const indentLevel = 1; // внутренний отступ
 const indentLength = 2; // внешний отступ
 const makeIndent = (deep, level = 0) => '  '.repeat(deep - level);
@@ -7,7 +7,7 @@ const makeIndent = (deep, level = 0) => '  '.repeat(deep - level);
 const stringify = (node, deep = 0) => {
   if (_.isObject(node)) {
     const content = _.keys(node).map((elem) => `${makeIndent(deep + 1, indentLevel)}${elem}: ${stringify(node[elem], deep + indentLength)}`).join('\n');
-    return `{\n${content}\n${makeIndent(deep, indentLength)}}`;
+    return `{\n${content}\n${makeIndent(deep, indentLength)}}`; // отступ для } = накопленный отступ - внешний отступ
   }
   return node;
 };

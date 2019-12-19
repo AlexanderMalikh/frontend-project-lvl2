@@ -1,26 +1,24 @@
 import _ from 'lodash';
 
 const stringify = (node) => {
-  if (typeof node === 'object') {
+  if (_.isObject(node)) {
     return '[complex value]';
   }
   return `'${node}'`;
 };
 
-const plainRender = (ast) => {
-  const getStrings = (nodes, parent = '') => Object.keys(nodes).filter((key) => nodes[key].status !== 'unchanged').map((key) => {
-    const {
-      beforeValue, afterValue, children, status,
-    } = nodes[key];
-    const mappingByStatus = {
-      tree: `${_.flatten(getStrings(children, `${parent}${key}.`)).join('\n')}`,
-      changed: `Property \`${parent}${key}\` was updated from ${stringify(beforeValue)} to ${stringify(afterValue)}`,
-      added: `Property \`${parent}${key}\` was added with value: ${stringify(afterValue)}`,
-      removed: `Property \`${parent}${key}\` was removed`,
-    };
-    return `${mappingByStatus[status]}`;
-  });
-  const renderedAst = (_.flatten(getStrings(ast))).join('\n');
+const mappingByStatus = {
+  tree: (item, parent, func) => `${func(item.children, `${parent}${item.key}.`)}`,
+  changed: (item, parent) => `Property \`${parent}${item.key}\` was updated from ${stringify(item.beforeValue)} to ${stringify(item.afterValue)}`,
+  added: (item, parent) => `Property \`${parent}${item.key}\` was added with value: ${stringify(item.afterValue)}`,
+  removed: (item, parent) => `Property \`${parent}${item.key}\` was removed`,
+};
+
+const plainRender = (ast, parent = '') => {
+  const getStrings = ast
+    .filter((node) => node.status !== 'unchanged')
+    .map((node) => mappingByStatus[node.status](node, parent, plainRender));
+  const renderedAst = _.flatten(getStrings).join('\n');
   //  console.log(ast);
   return `${renderedAst}`;
 };

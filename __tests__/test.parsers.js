@@ -12,10 +12,10 @@ const data = [
 ];
 
 describe('format tests', () => {
-  test.each(data)('compare %s and %s with %s format', (file1, file2, format = 'tree', expectation) => {
-    const getPathFileBefore = getFixturePath(file1);
-    const getPathFileAfter = getFixturePath(file2);
-    const expectedResult = fs.readFileSync(getFixturePath(expectation), 'utf-8').trimRight();
+  test.each(data)('compare %s and %s with %s format', (fileNameBefore, fileNameAfter, format = 'tree', expectedOutput) => {
+    const getPathFileBefore = getFixturePath(fileNameBefore);
+    const getPathFileAfter = getFixturePath(fileNameAfter);
+    const expectedResult = fs.readFileSync(getFixturePath(expectedOutput), 'utf-8').trimRight();
     expect(makeDiff(getPathFileBefore, getPathFileAfter, format)).toBe(expectedResult);
   });
 });

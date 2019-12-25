@@ -1,4 +1,3 @@
-import jsonRender from './jsonRender';
 import plainRender from './plainRender';
 import treeRender from './treeRender';
 
@@ -7,7 +6,7 @@ export default (ast, format = 'tree') => {
     case 'plain':
       return plainRender(ast);
     case 'json':
-      return jsonRender(ast);
+      return JSON.stringify(ast);
     default:
       return treeRender(ast);
   }

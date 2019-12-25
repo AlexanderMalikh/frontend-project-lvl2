@@ -1,10 +1,10 @@
 import _ from 'lodash';
 
 const stringify = (node) => {
-  if (_.isObject(node)) {
-    return '[complex value]';
+  if (!_.isObject(node)) {
+    return `'${node}'`;
   }
-  return `'${node}'`;
+  return '[complex value]';
 };
 
 const mappingByStatus = {

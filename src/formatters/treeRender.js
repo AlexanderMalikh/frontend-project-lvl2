@@ -5,11 +5,17 @@ const indentLength = 2; // внешний отступ
 const makeIndent = (deep, level = 0) => '  '.repeat(deep - level);
 
 const stringify = (node, deep = 0) => {
-  if (_.isObject(node)) {
-    const content = _.keys(node).map((elem) => `${makeIndent(deep + 1, indentLevel)}${elem}: ${stringify(node[elem], deep + indentLength)}`).join('\n');
-    return `{\n${content}\n${makeIndent(deep, indentLength)}}`; // отступ для } = накопленный отступ - внешний отступ
+  if (!_.isObject(node)) {
+    return node;
   }
-  return node;
+  const keys = _.keys(node);
+  const content = keys.map((elem) => {
+    const key = `${makeIndent(deep + 1, indentLevel)}${elem}: `;
+    const value = `${stringify(node[elem], deep + indentLength)}`;
+    return `${key}${value}`;
+  });
+  content.join('\n');
+  return `{\n${content}\n${makeIndent(deep, indentLength)}}`; // отступ для } = накопленный отступ - внешний отступ
 };
 
 const mapByStatus = {

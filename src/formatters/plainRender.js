@@ -9,9 +9,9 @@ const stringify = (node) => {
 
 const mappingByStatus = {
   tree: (item, parent, func) => `${func(item.children, `${parent}${item.key}.`)}`,
-  changed: (item, parent) => `Property \`${parent}${item.key}\` was updated from ${stringify(item.beforeValue)} to ${stringify(item.afterValue)}`,
-  added: (item, parent) => `Property \`${parent}${item.key}\` was added with value: ${stringify(item.afterValue)}`,
-  removed: (item, parent) => `Property \`${parent}${item.key}\` was removed`,
+  changed: (item, parent) => `Property '${parent}${item.key}' was updated from ${stringify(item.beforeValue)} to ${stringify(item.afterValue)}`,
+  added: (item, parent) => `Property '${parent}${item.key}' was added with value: ${stringify(item.afterValue)}`,
+  removed: (item, parent) => `Property '${parent}${item.key}' was removed`,
 };
 
 const plainRender = (ast, parent = '') => {

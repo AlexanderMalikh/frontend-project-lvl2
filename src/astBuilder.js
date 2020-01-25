@@ -33,12 +33,17 @@ const buildAst = (file1obj, file2obj) => {
   const ast = keys.map((key) => {
     const { status, action } = statuses.find(({ check }) => check(file1obj, file2obj, key));
     const { beforeValue, afterValue, children } = action(file1obj, file2obj, key, buildAst);
+    if (status === 'tree') {
+      return {
+        status,
+        key,
+        beforeValue,
+        afterValue,
+        children,
+      };
+    }
     return {
-      status,
-      key,
-      beforeValue,
-      afterValue,
-      children,
+      status, key, beforeValue, afterValue,
     };
   });
   return ast;

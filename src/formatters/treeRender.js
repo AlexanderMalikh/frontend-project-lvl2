@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
-const indentLevel = 1; // внутренний отступ
-const indentLength = 2; // внешний отступ
+const indentLevel = 1;
+const indentLength = 2;
 const makeIndent = (deep, level = 0) => '  '.repeat(deep - level);
 
 const stringify = (node, deep = 0) => {
@@ -15,7 +15,7 @@ const stringify = (node, deep = 0) => {
     return `${key}${value}`;
   });
   content.join('\n');
-  return `{\n${content}\n${makeIndent(deep, indentLength)}}`; // отступ для } = накопленный отступ - внешний отступ
+  return `{\n${content}\n${makeIndent(deep, indentLength)}}`;
 };
 
 const mapByStatus = {

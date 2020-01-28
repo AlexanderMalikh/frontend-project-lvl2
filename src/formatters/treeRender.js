@@ -28,7 +28,6 @@ const mapByStatus = {
 };
 
 const treeRender = (ast, deep = indentLength) => {
-  // console.log(ast);
   const getStrings = ast.map((node) => mapByStatus[node.status](node, deep, treeRender));
   const renderedAst = _.flatten(getStrings).join('\n');
   return `{\n${renderedAst}\n${makeIndent(deep, indentLength)}}`;

@@ -31,20 +31,9 @@ const statuses = [
 const buildAst = (file1obj, file2obj) => {
   const keys = _.union(_.keys(file1obj), _.keys(file2obj));
   const ast = keys.map((key) => {
-    const { status, action } = statuses.find(({ check }) => check(file1obj, file2obj, key));
-    const { beforeValue, afterValue, children } = action(file1obj, file2obj, key, buildAst);
-    if (status === 'tree') {
-      return {
-        status,
-        key,
-        beforeValue,
-        afterValue,
-        children,
-      };
-    }
-    return {
-      status, key, beforeValue, afterValue,
-    };
+    const { action, status } = statuses.find(({ check }) => check(file1obj, file2obj, key));
+    const value = action(file1obj, file2obj, key, buildAst);
+    return { status, key, ...value };
   });
   return ast;
 };

@@ -14,12 +14,11 @@ const mappingByStatus = {
   removed: (item, parent) => `Property '${parent}${item.key}' was removed`,
 };
 
-const plainRender = (ast, parent = '') => {
+const plainRender = (ast, parent = []) => {
   const getStrings = ast
     .filter((node) => node.status !== 'unchanged')
     .map((node) => mappingByStatus[node.status](node, parent, plainRender));
   const renderedAst = _.flatten(getStrings).join('\n');
-  //  console.log(ast);
   return `${renderedAst}`;
 };
 

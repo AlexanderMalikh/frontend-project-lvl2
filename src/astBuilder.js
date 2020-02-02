@@ -32,8 +32,8 @@ const buildAst = (file1obj, file2obj) => {
   const keys = _.union(_.keys(file1obj), _.keys(file2obj));
   const ast = keys.map((key) => {
     const { action, status } = statuses.find(({ check }) => check(file1obj, file2obj, key));
-    const value = action(file1obj, file2obj, key, buildAst);
-    return { status, key, ...value };
+    const differenceValue = action(file1obj, file2obj, key, buildAst);
+    return { status, key, ...differenceValue };
   });
   return ast;
 };

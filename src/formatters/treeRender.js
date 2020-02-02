@@ -18,7 +18,7 @@ const stringify = (node, deep = 0) => {
   return `{\n${content}\n${makeIndent(deep, indentLength)}}`;
 };
 
-const mapByStatus = {
+const mappingByStatus = {
   tree: (item, deep, func) => `${makeIndent(deep)}${item.key}: ${(func(item.children, deep + indentLength))}`,
   unchanged: (item, deep) => `${makeIndent(deep)}${item.key}: ${stringify(item.beforeValue, deep)}`,
   changed: (item, deep) => [`${makeIndent(deep, indentLevel)}+ ${item.key}: ${stringify(item.afterValue, deep + indentLength)}`,
@@ -28,7 +28,7 @@ const mapByStatus = {
 };
 
 const treeRender = (ast, deep = indentLength) => {
-  const getStrings = ast.map((node) => mapByStatus[node.status](node, deep, treeRender));
+  const getStrings = ast.map((node) => mappingByStatus[node.status](node, deep, treeRender));
   const renderedAst = _.flatten(getStrings).join('\n');
   return `{\n${renderedAst}\n${makeIndent(deep, indentLength)}}`;
 };
